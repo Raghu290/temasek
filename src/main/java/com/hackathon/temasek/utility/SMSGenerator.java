@@ -17,13 +17,13 @@ public class SMSGenerator {
 		this.ACCESS_TOKEN = ACCESS_TOKEN;
 	}
 
-	public String send(String userMobileNumber) {
-		String OTP = OTP(4);
+	public String send(String userMobileNumber,String countryCode) {
+		String OTP = String.format("%04d", new Random().nextInt(10000));
 	
 		
 		String apiEndPoint = "https://portal.mobtexting.com/api/v2/";
 		String urlToRead = apiEndPoint + "sms/send?access_token=" + this.ACCESS_TOKEN + "&message="
-				    + this.SMS_BODY+OTP  + "&sender="+ this.FROM + "&to=" + "91"+userMobileNumber + "&service=T";
+				    + this.SMS_BODY+OTP  + "&sender="+ this.FROM + "&to=" + countryCode+userMobileNumber + "&service=T";
         System.out.println("aasss :"+urlToRead);
 		StringBuilder result = new StringBuilder();
 
@@ -47,10 +47,10 @@ public class SMSGenerator {
 		return OTP;
 	}
 	
-	  String OTP(int len) 
+	 /* String OTP() 
 	    { 
-	   
-	        // Using numeric values 
+	   return String.format("%04d", new Random().nextInt(10000));
+	       // Using numeric values 
 	        String numbers = "0123456789"; 
 	  
 	        // Using random method 
@@ -65,6 +65,6 @@ public class SMSGenerator {
 	            otp[i] = 
 	             numbers.charAt(rndm_method.nextInt(numbers.length())); 
 	        } 
-	        return otp.toString(); 
-	    } 
+	        return otp.toString(); */
+	     
 }

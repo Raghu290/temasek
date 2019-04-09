@@ -30,6 +30,14 @@ public class RegistrationService {
 		userEntity.setPassword(user.getPassword());
 		userEntity.setPhone(user.getPhone());
 		userEntity.setUserId(user.getUserId());
+		userEntity.setCountry(user.getCountry());
+		if(user.getCountry() != null && user.getCountry().equalsIgnoreCase("India")){
+			userEntity.setCountryCode("91");
+		}
+		//Get country code from directory Enum later
+		if(user.getCountry() != null && user.getCountry().equalsIgnoreCase("Singapore")){
+			userEntity.setCountryCode("65");
+		}
 		userRepository.saveAndFlush(userEntity);		
 	}
 	

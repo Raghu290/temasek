@@ -1,17 +1,17 @@
 spring:
-  mvc:
-    view:
-      prefix: /WEB-INF/pages/
-      suffix: .jsp      
+   #h2:
+     #console:
+       #enabled: true
+  
  
-  datasource:
-    username: root
-    password: admin
-    url: jdbc:mysql://localhost/airticket
+  #datasource:
+    #username: root
+    #password: admin
+    #url: jdbc:mysql://localhost/airticket
 
 server:
   context-path: /temasek
-  port: 9090
+  #port: 9090
   
   
 logging:

@@ -21,7 +21,7 @@ public class SMSService {
 		UserEntity userEntity = userRepository.findOne(userId);
 		System.out.println("SMSService :"+environment.getProperty("5160af9aa6b75f30df4581b2f5b1c75c"));
 		SMSGenerator smsGenerator = new SMSGenerator(environment.getProperty("MOBTEXTING_ACCESS_TOKEN"));
-		String otp = smsGenerator.send(userEntity.getPhone());
+		String otp = smsGenerator.send(userEntity.getPhone(), userEntity.getCountryCode());
 		
 		userRepository.insertOTP(otp,userId);
 	}

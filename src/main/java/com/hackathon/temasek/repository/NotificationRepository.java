@@ -18,5 +18,6 @@ import com.hackathon.temasek.entity.NotificationEntity;
 public interface NotificationRepository extends JpaRepository<NotificationEntity, EmbeddedNotificationEntity>{
 
 	 List<NotificationEntity> findByNotificationEmbeddedSource(String source);
+	 List<NotificationEntity> findByNotificationEmbeddedDestination(String source);
 
 }

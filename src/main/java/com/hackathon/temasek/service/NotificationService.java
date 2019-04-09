@@ -31,6 +31,6 @@ public class NotificationService {
 	
 	public List<NotificationEntity> getNotifications(String userId) {
 		
-		return notificationRepository.findByNotificationEmbeddedSource(userId);
+		return notificationRepository.findByNotificationEmbeddedDestination(userId);
 	}
 }
