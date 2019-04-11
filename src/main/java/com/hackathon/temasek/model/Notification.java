@@ -4,6 +4,10 @@ public class Notification {
 
 
 	private String sourceUserId;
+	private String destinationUserId;
+	private String name;
+	private String docPath;
+	
 	public String getSourceUserId() {
 		return sourceUserId;
 	}
@@ -16,12 +20,19 @@ public class Notification {
 	public void setDestinationUserId(String destinationUserId) {
 		this.destinationUserId = destinationUserId;
 	}
-	public String getDocName() {
-		return docName;
+	
+	
+	public String getDocPath() {
+		return docPath;
 	}
-	public void setDocName(String docName) {
-		this.docName = docName;
+	public void setDocPath(String docPath) {
+		this.docPath = docPath;
 	}
-	private String destinationUserId;
-	private String docName;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+
 }

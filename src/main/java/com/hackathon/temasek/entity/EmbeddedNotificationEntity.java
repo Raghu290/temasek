@@ -16,16 +16,29 @@ public class EmbeddedNotificationEntity  implements Serializable{
 	@NotNull
 	private String destination;
 	
+	
+
+	public String getDocPath() {
+		return docPath;
+	}
+
+	public void setDocPath(String docPath) {
+		this.docPath = docPath;
+	}
+
 	@NotNull
-	private String document;
-	public String getDocument() {
-		return document;
+	private String name;
+
+	public String getName() {
+		return name;
 	}
 
-	public void setDocument(String document) {
-		this.document = document;
+	public void setName(String name) {
+		this.name = name;
 	}
 
+	@NotNull
+	private String docPath;
 	public String getSource() {
 		return source;
 	}

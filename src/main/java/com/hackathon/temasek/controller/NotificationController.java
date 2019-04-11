@@ -28,6 +28,9 @@ import com.hackathon.temasek.entity.NotificationEntity;
 import com.hackathon.temasek.entity.UserEntity;
 import com.hackathon.temasek.model.Login;
 import com.hackathon.temasek.model.Notification;
+import com.hackathon.temasek.model.NotificationResponse;
+import com.hackathon.temasek.model.ResponseBody;
+import com.hackathon.temasek.model.User;
 import com.hackathon.temasek.service.NotificationService;
 
 @RestController
@@ -37,14 +40,14 @@ public class NotificationController  {
 	private NotificationService notificationService;
 
 	@RequestMapping(value = "/shareDocument", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String shareDocument(@RequestBody Notification notification) {	
+	public ResponseBody shareDocument(@RequestBody Notification notification) {	
 	
 		return notificationService.insertNotificationDocument(notification);
 	}
     	
-	@RequestMapping(value = "/getNotifications/{userId}", method = RequestMethod.GET,consumes = MediaType.APPLICATION_JSON_VALUE)
-	public List<NotificationEntity> getNotifications(@PathVariable("userId") String userId) {	
+	@RequestMapping(value = "/getNotifications", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
+	public List<NotificationEntity> getNotifications(@RequestBody User user) {	
 	
-		return notificationService.getNotifications(userId);
+		return notificationService.getNotifications(user.getUserId());
 	}
 }

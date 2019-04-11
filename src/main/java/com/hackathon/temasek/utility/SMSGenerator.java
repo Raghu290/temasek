@@ -3,6 +3,7 @@ package com.hackathon.temasek.utility;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Random;
 
@@ -17,7 +18,7 @@ public class SMSGenerator {
 		this.ACCESS_TOKEN = ACCESS_TOKEN;
 	}
 
-	public String send(String userMobileNumber,String countryCode) {
+	public String send(String userMobileNumber,String countryCode) throws Exception {
 		String OTP = String.format("%04d", new Random().nextInt(10000));
 	
 		
@@ -29,7 +30,7 @@ public class SMSGenerator {
 
 		URL url = null;
 
-		try{
+		
 			url = new URL(urlToRead);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
@@ -39,10 +40,7 @@ public class SMSGenerator {
 				result.append(line);
 			}
 			rd.close();
-		}catch(Exception e){
-			System.out.println(e);
-			return null;
-		}
+		
 
 		return OTP;
 	}

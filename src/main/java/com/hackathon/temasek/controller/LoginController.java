@@ -32,9 +32,11 @@ import com.hackathon.temasek.entity.UserEntity;
 import com.hackathon.temasek.exception.InvalidCredentialException;
 import com.hackathon.temasek.exception.InvalidUserOTPException;
 import com.hackathon.temasek.model.Login;
+import com.hackathon.temasek.model.ResponseBody;
 import com.hackathon.temasek.model.User;
 import com.hackathon.temasek.service.LoginService;
 import com.hackathon.temasek.service.SMSService;
+import com.hackathon.temasek.utility.ApplicationConstants;
 
 
 
@@ -56,33 +58,37 @@ public class LoginController {
 
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET,consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String authenticateLogin(Principal user) {		
+	public ResponseBody authenticateLogin(Principal user) {		
 
 		//ModelAndView modelAndView = new ModelAndView("error");
 		System.out.println("customer name "+ user.getName());
-		smsService.sendSMS(user.getName());	
+		return smsService.sendSMS(user.getName());	
 	   
 		
-		return "BAsic Authentication success for user :"+user.getName() +".Please enter OTP sent to mobile";
-
+		
 	}
 
 	@RequestMapping(value = "/validateOTP", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String validateOTP(@RequestBody Login login,HttpSession session,Principal user) {		
+	public ResponseBody validateOTP(@RequestBody Login login,HttpSession session,Principal user) {	
+		ResponseBody response = new ResponseBody();
     try {
 		loginService.validateOTP(login);
      }catch (InvalidUserOTPException e) {
     		System.out.println("validateOTP "+ user.getName());
-    	 invalidateSession(session);
+    	    invalidateSession(session);
     		System.out.println("validateOTP after sesison invalidation "+ user.getName());
-	     return environment.getProperty(e.getMessage());
-	     
-
+    		response.setStatusCode(ApplicationConstants.FAILURE);
+    		response.setStatusMessage(environment.getProperty(e.getMessage()));
+	     return response;
 	} catch (InvalidCredentialException e) {
-		
-	    return environment.getProperty(e.getMessage());
+		invalidateSession(session);
+		response.setStatusCode(ApplicationConstants.FAILURE);
+		response.setStatusMessage(environment.getProperty(e.getMessage()));
+        return response;
 	}
-    return "OTP authenticated";
+    response.setStatusCode(ApplicationConstants.SUCCESS);
+	response.setStatusMessage("OTP Validation Success !!!");
+    return response;
 	}
 	
 	private void invalidateSession(HttpSession session) {
@@ -95,22 +101,15 @@ public class LoginController {
 		
 	}
 	@RequestMapping(value = "/logout")
-	public ModelAndView logout(HttpSession session) {
-		
-		ModelAndView model = new ModelAndView("infyGoHome", "", "");
-
+	public ResponseBody logout(HttpSession session) {
+		ResponseBody response = new ResponseBody();
 		Enumeration<String> attributes = session.getAttributeNames();
-
 		while (attributes.hasMoreElements())
-			session.removeAttribute(attributes.nextElement());
-		
-		model.addObject("logoutMessage", environment.getProperty("LoginController.LOGOUT_SUCCESS"));
-		return model;
+			session.removeAttribute(attributes.nextElement());	
+		response.setStatusCode(ApplicationConstants.SUCCESS);
+		response.setStatusMessage(environment.getProperty("LoginController.LOGOUT_SUCCESS"));
+		return response ;
 	}
 
-	@RequestMapping(value = "/getmessage", method = RequestMethod.GET, produces = "application/json")
-	public String getMessage() {
-		
-		return  "You have accessed a Basic Auth protected resource.";
-	}
+
 }

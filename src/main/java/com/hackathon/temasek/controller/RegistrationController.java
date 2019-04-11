@@ -24,16 +24,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hackathon.temasek.exception.UserIdAlreadyPresentException;
 import com.hackathon.temasek.model.Email;
+import com.hackathon.temasek.model.ResponseBody;
 import com.hackathon.temasek.model.User;
 import com.hackathon.temasek.service.RegistrationService;
+import com.hackathon.temasek.utility.ApplicationConstants;
 
 
 
 @RestController
 @SessionAttributes("contextPath")
-/*@PropertySources({@PropertySource("classpath:/com/infosys/irs/resources/configuration.properties"),
-	@PropertySource("classpath:/com/infosys/irs/resources/message_en.properties"),
-	@PropertySource("classpath:/com/infosys/irs/resources/message_hi.properties")})*/
 @PropertySource("classpath:configuration.properties")
 public class RegistrationController {
 	@Autowired
@@ -50,8 +49,9 @@ public class RegistrationController {
 	}
 	
 	@RequestMapping(value = "/registerUser", method = RequestMethod.POST)
-	public String addCustomer(@RequestBody User user) {
+	public ResponseBody addCustomer(@RequestBody User user) {
 	System.out.println("registering user");
+	ResponseBody responseBody = new ResponseBody();
 		try{
 			registrationService.registerUser(user);
 			Email email = new Email();
@@ -64,16 +64,16 @@ public class RegistrationController {
 		
 			
 		}catch(UserIdAlreadyPresentException e){
-		
-			if (e.getMessage().contains("RegistrationService")) {
-			
-		        return environment.getProperty(e.getMessage());
+			responseBody.setStatusMessage(e.getMessage());
+			if (e.getMessage().contains("RegistrationService")) {	
+				responseBody.setStatusMessage( environment.getProperty(e.getMessage()));
 			}
-
+			responseBody.setStatusCode(ApplicationConstants.FAILURE);
 			
 		}
-		
-		return environment.getProperty("RegistrationController.SUCCESSFUL_REGISTRATION");
+		responseBody.setStatusCode(ApplicationConstants.SUCCESS);
+		responseBody.setStatusMessage(environment.getProperty("RegistrationController.SUCCESSFUL_REGISTRATION"));
+		return responseBody;
 	}
 	
 	

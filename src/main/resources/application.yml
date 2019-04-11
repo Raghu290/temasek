@@ -1,7 +1,7 @@
 spring:
    #h2:
-     #console:
-       #enabled: true
+    # console:
+     #  enabled: true
   
  
   #datasource:
@@ -13,14 +13,6 @@ server:
   context-path: /temasek
   #port: 9090
   
-  
-logging:
-  file: Errorlog.log
-  level:
-    root: info
-    com.infoys.ars: info
-  pattern:
-    file: "%d{yyyy-MM-dd HH:mm:ss,SSS} %5p [%t] %c [%M] - %m%n"
 
 
 

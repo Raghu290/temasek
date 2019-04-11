@@ -29,7 +29,7 @@ public class RegistrationService {
 		userEntity.setName(user.getName());
 		userEntity.setPassword(user.getPassword());
 		userEntity.setPhone(user.getPhone());
-		userEntity.setUserId(user.getUserId());
+		userEntity.setUserId(user.getEmail());
 		userEntity.setCountry(user.getCountry());
 		if(user.getCountry() != null && user.getCountry().equalsIgnoreCase("India")){
 			userEntity.setCountryCode("91");
