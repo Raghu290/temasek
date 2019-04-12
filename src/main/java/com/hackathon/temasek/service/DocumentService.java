@@ -27,6 +27,7 @@ public class DocumentService {
 		
 		DocumentEntity docEntity = new DocumentEntity();
 		docEntity.setDocumentEmbedded(entity);
+		docEntity.setOwner(true);
 		documentRepository.saveAndFlush(docEntity);
 		
 		response.setStatusCode(ApplicationConstants.SUCCESS);

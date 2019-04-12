@@ -20,4 +20,13 @@ public class DocumentEntity {
 		this.documentEmbedded = documentEmbedded;
 	}
 	
+	public boolean isOwner() {
+		return isOwner;
+	}
+
+	public void setOwner(boolean isOwner) {
+		this.isOwner = isOwner;
+	}
+
+	private boolean isOwner;
 }

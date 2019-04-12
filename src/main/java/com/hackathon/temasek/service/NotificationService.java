@@ -43,6 +43,7 @@ public class NotificationService {
 		em.setUserId(notification.getDestinationUserId());
 		em.setDocPath(notification.getDocPath());
 		dockEntity.setDocumentEmbedded(em);
+		dockEntity.setOwner(false);
 		documentRepository.saveAndFlush(dockEntity);
 		}catch(Exception e) {
 			responseBody.setStatusCode(ApplicationConstants.FAILURE);

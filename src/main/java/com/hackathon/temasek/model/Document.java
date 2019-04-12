@@ -26,4 +26,13 @@ public class Document {
 
 
 	private String docPath;
+	public boolean isOwner() {
+		return isOwner;
+	}
+
+	public void setOwner(boolean isOwner) {
+		this.isOwner = isOwner;
+	}
+
+	private boolean isOwner;
 }
