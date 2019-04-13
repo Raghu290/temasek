@@ -22,20 +22,21 @@ public class SMSService {
 	
 	public ResponseBody sendSMS(String userId) {
 		ResponseBody response = new ResponseBody();
+		UserEntity userEntity =null;
 		try {
-		UserEntity userEntity = userRepository.findOne(userId);
+		 userEntity = userRepository.findOne(userId);
 		SMSGenerator smsGenerator = new SMSGenerator(environment.getProperty("MOBTEXTING_ACCESS_TOKEN"));
 		String otp = smsGenerator.send(userEntity.getPhone(), userEntity.getCountryCode());
 		
 		userRepository.insertOTP(otp,userId);
 		response.setStatusCode(ApplicationConstants.SUCCESS);
-		response.setStatusMessage("Basic Authentication success for user :"+userId +".Please enter OTP sent to mobile");
+		response.setStatusMessage(userEntity.getName());
 		}catch(Exception e) {
 			//response.setStatusCode(ApplicationConstants.FAILURE);
 			//response.setStatusMessage(e.getMessage());
 			userRepository.insertOTP("1111",userId);
 			response.setStatusCode(ApplicationConstants.SUCCESS);
-			response.setStatusMessage("Basic Authentication success for user :"+userId +".Please enter default OTP sent to mobile");
+			response.setStatusMessage(userEntity.getName());
 		}
 		return response;
 	}
